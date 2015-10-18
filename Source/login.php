@@ -65,7 +65,7 @@
         <p class="lead">Please login to use this system:</p>
 
 
-        <form role="form" action='loginfunctions.php' method='post'>
+        <form role="form" action='functions.php' method='post'>
       <div class="form-group">
         <label for="email">Email:</label>
         <input type="email" class="form-control" name="email" placeholder="Enter email">
@@ -80,15 +80,16 @@
       </form>
       <?php //error checks//
           session_start();
-          if($_SESSION["error"]=="nomatch"){
-            $_SESSION["error"]="none";
-            echo("<span style='color: red'>Please enter the correct password.</span>");
+          if (isset ($_SESSION["error"])){
+            if($_SESSION["error"]=="nomatch"){
+              $_SESSION["error"]="none";
+              echo("<span style='color: red'>Please enter the correct password.</span>");
+            }
+            elseif($_SESSION["error"]=="fieldcheck"){
+               $_SESSION["error"]="none";
+              echo("<span style='color: red'>Please fill in all the fields.</span>");
+            }
           }
-          elseif($_SESSION["error"]=="fieldcheck"){
-             $_SESSION["error"]="none";
-            echo("<span style='color: red'>Please fill in all the fields.</span>");
-          }
-
         ?>
       </div>
 

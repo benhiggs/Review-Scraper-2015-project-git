@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<?php
+session_start();
+include 'constants.php';
+checklogin();
+?>
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,7 +29,7 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-  </head>
+</head>
 
 
   <body>
@@ -48,6 +53,10 @@
             <li class="disabled"><a>Project Info</a></li>
             <li class="disabled"><a>Licensing</a></li>
           </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="disabled"><a><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+            <li class="inactive"><a onclick="bypass()" href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+          </ul>
         </div>
       </div>
     </nav>
@@ -61,49 +70,29 @@
 
     <div class="container">
       <div class="starter-template">
-        <h1>Registration</h1>
-        <p class="lead">To use the system, you must first register</p>
+        <h1>Set up your system session</h1>
+        <p class="lead">To use the system, you must first choose your hotel from TripAdvisor</p>
         </div>
 
-    <div class="row">
-      <div class="col-sm-4">
-      Welcome to the hotel scraping tool<br>
-      This is a placeholder for an indroduction to the system
-      </div>
-
-      <div class="col-sm-4">
-      <form role="form" action='functions.php' method='post'>
+    <form role="form" action='functions.php' method='post'>
       <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" class="form-control" name="email" placeholder="Enter email">
+        <label for="URL">Hotel URL:</label>
+        <input type="text" class="form-control" name="URL" placeholder="Paste url here">
       </div>
-      <div class="form-group">
-        <label for="pwd">Password:</label>
-        <input type="password" class="form-control" name="password" placeholder="Enter password">
-      </div>
-      <button type="register" name="register" class="btn btn-default">Register</button>
+      <button type="setup" name="addurl" class="btn btn-default">Setup Hotel</button>
       </form>
-        <?php //error checks//
-          session_start();
+      <?php //error checks//
           if (isset ($_SESSION["error"])){
-            if($_SESSION["error"]=="emailexist"){
+            if($_SESSION["error"]=="invalidurl"){
               $_SESSION["error"]="none";
-              echo("<span style='color: red'>This email already exists.</span>");
+              echo("<span style='color: red'>You must enter a valid TripAdvisor URL.</span>");
             }
-            elseif($_SESSION["error"]=="fieldcheck"){
-               $_SESSION["error"]="none";
-              echo("<span style='color: red'>Please fill in all the fields.</span>");
+            else if($_SESSION["error"]=="invalidurlformat"){
+              $_SESSION["error"]="none";
+              echo("<span style='color: red'>The URL you enter must be in the following format:<br>http://www.tripadvisor.co.uk/Hotel_Review-[specific hotel identifier] .html</span>");
             }
           }
-        ?>
-      </div>
-
-      <div class="col-sm-4">
-
-      </div>
-      </div>
-      
-
+      ?>
     </div>
 
 

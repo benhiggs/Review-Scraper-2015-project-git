@@ -14,10 +14,14 @@ function pwhash($password){
 	return $hash;
 }
 
-function pwcheck($password){
-	$hashcheck=password_verify($password,mysqli_fetch_assoc(mysqli_query($con,"SELECT password FROM owner WHERE email='$email'"))['ownerid']);
-	return $hashckeck;
+function pwcheck($password,$hashed){
+	$hashcheck=password_verify($password,$hashed);
+	return $hashcheck;
 }
 
-
+function checklogin(){
+	if($_SESSION["userid"]==null){
+		header('Location:login.php');
+	}
+}
 ?>

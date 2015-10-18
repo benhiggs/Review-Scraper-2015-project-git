@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<?php
+session_start();
+include 'constants.php';
+checklogin();
+?>
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,8 +29,21 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script type="text/javascript">
+      var hook = true;
+      window.onbeforeunload = function() {
+        if (hook) {
+          return "Please log out first"
+        }
+      }
+      function unhook() {
+        hook=false;
+      }
+      function bypass(){
+        unhook();
+    }
+    </script>
   </head>
-
 
   <body>
 
@@ -38,15 +56,18 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.php">Group H - Review Scraper</a>
+          <a class="navbar-brand">Group H - Review Scraper</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="home.php">Introduction</a></li>
-            <li class="inactive"><a href="scrape.php">Scrape!</a></li>
-            <li class="inactive"><a href="settings.php">Settings</a></li>
-            <li class="inactive"><a href="project_info.php">Project Info</a></li>
-            <li class="inactive"><a href="license.php">Licensing</a></li>
+            <li class="active"><a onclick="bypass()" href="home.php">Introduction</a></li>
+            <li class="inactive"><a onclick="bypass()" href="scrape.php">Scrape!</a></li>           
+            <li class="inactive"><a onclick="bypass()" href="project_info.php">Project Info</a></li>
+            <li class="inactive"><a onclick="bypass()" href="license.php">Licensing</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="inactive"><a onclick="bypass()" href="settings.php"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+            <li class="inactive"><a onclick="bypass()" href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
           </ul>
         </div>
       </div>
@@ -62,8 +83,7 @@
     <div class="container">
       <div class="starter-template">
         <h1>Intro...</h1>
-        <p class="lead">Welcome to the basic page setup
-        <?php session_start(); echo($_SESSION["userid"]); echo("HELLO") ?></p>
+        <p class="lead">Welcome to the basic page setup</p>
       </div>
 
     </div>
